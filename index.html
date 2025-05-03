@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>汉字学习游戏</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="catAnimation.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>汉字学习游戏</h1>
+            <div class="score-display">得分: <span id="score">0</span> / <span id="total">0</span></div>
+            <button id="sound-toggle" class="sound-toggle">
+                <i class="fas fa-volume-up"></i>
+            </button>
+        </div>
+        
+        <div class="game-container">
+            <div id="character-display" class="character-display">
+                <!-- Character will be displayed here -->
+            </div>
+            
+            <div class="cat-buttons-container">
+                <div id="cat-sprite" class="cat-sprite">
+                    <img src="cat_ani.png" class="cat-frame" alt="猫咪动画">
+                </div>
+                
+                <div class="buttons">
+                    <button id="correct-btn" class="btn correct-btn image-btn">
+                        <img src="yes_200x200.png" alt="认识">
+                    </button>
+                    <button id="uncertain-btn" class="btn uncertain-btn image-btn">
+                        <img src="maybe_200x200.png" alt="不确定">
+                    </button>
+                    <button id="incorrect-btn" class="btn incorrect-btn image-btn">
+                        <img src="no_200x200.png" alt="不认识">
+                    </button>
+                </div>
+            </div>
+            
+            <button id="next-btn" class="btn next-btn">下一个</button>
+        </div>
+        
+        <div id="results" class="results hidden">
+            <h2>学习结果</h2>
+            <div class="stats-container">
+                <div class="stat-item">
+                    <span class="stat-label">认识:</span>
+                    <span id="known-count" class="stat-value">0</span>
+                    <span class="stat-percent">(<span id="known-percent">0</span>%)</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">不确定:</span>
+                    <span id="uncertain-count" class="stat-value">0</span>
+                    <span class="stat-percent">(<span id="uncertain-percent">0</span>%)</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">不认识:</span>
+                    <span id="unknown-count" class="stat-value">0</span>
+                    <span class="stat-percent">(<span id="unknown-percent">0</span>%)</span>
+                </div>
+                <div class="stat-item total-stat">
+                    <span class="stat-label">总计:</span>
+                    <span id="final-total" class="stat-value">0</span>
+                    <span class="stat-percent">字</span>
+                </div>
+            </div>
+            <div id="known-characters" class="character-list">
+                <h3>认识的汉字:</h3>
+                <div class="character-grid" id="known-grid"></div>
+            </div>
+            <div id="uncertain-characters" class="character-list">
+                <h3>不确定的汉字:</h3>
+                <div class="character-grid" id="uncertain-grid"></div>
+            </div>
+            <div id="unknown-characters" class="character-list">
+                <h3>不认识的汉字:</h3>
+                <div class="character-grid" id="unknown-grid"></div>
+            </div>
+            <button id="restart-btn" class="btn restart-btn">再玩一次</button>
+        </div>
+    </div>
+    
+    <div id="throw-ball" class="throw-ball"></div>
+    
+    <script src="catAnimation.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 

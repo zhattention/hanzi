@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>猫咪动画测试</title>
+    <link rel="stylesheet" href="catAnimation.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', 'Marker Felt', '苹方', 'Arial Rounded MT Bold', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #C4E0F9 0%, #A1D2F8 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background-color: #FAFCFF;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            padding: 35px;
+            overflow: visible;
+            position: relative;
+            border: 8px solid #FFFFFF;
+            min-height: 500px;
+        }
+        
+        h1 {
+            color: #2F3C92;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .animation-container {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            background-color: #F0F5FF;
+            border-radius: 20px;
+            border: 4px solid #E1E6F9;
+            overflow: visible;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            background-color: #3A76F0;
+            color: white;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 0px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 0px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0px rgba(0, 0, 0, 0.2);
+        }
+        
+        .speed-control {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
+        .speed-control label {
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .speed-control input {
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>猫咪动画测试</h1>
+        
+        <div class="animation-container" id="animation-container">
+            <!-- 猫咪精灵图 -->
+            <div id="cat-sprite" class="cat-sprite">
+                <img src="cat_ani.png" class="cat-frame" alt="猫咪动画">
+                <div id="cat-play" class="cat-controls">
+                    <button class="cat-control-btn"><i class="fas fa-play"></i></button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button id="play-btn" class="btn">播放动画</button>
+            <button id="pause-btn" class="btn">暂停动画</button>
+        </div>
+        
+        <div class="speed-control">
+            <label for="speed-slider">动画速度: <span id="speed-value">1.0</span>秒</label>
+            <input type="range" id="speed-slider" min="0.2" max="2.0" step="0.1" value="1.0">
+        </div>
+    </div>
+    
+    <div id="throw-ball" class="throw-ball"></div>
+    
+    <script src="catAnimation.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 获取DOM元素
+            const catSprite = document.getElementById('cat-sprite');
+            const catFrame = catSprite.querySelector('.cat-frame');
+            const container = document.getElementById('animation-container');
+            const playBtn = document.getElementById('play-btn');
+            const pauseBtn = document.getElementById('pause-btn');
+            const catPlayBtn = document.getElementById('cat-play');
+            const speedSlider = document.getElementById('speed-slider');
+            const speedValue = document.getElementById('speed-value');
+            
+            // 当前速度
+            let currentSpeed = 1.0;
+            
+            // 更新速度显示
+            function updateSpeedDisplay() {
+                speedValue.textContent = currentSpeed.toFixed(1);
+            }
+            
+            // 初始化猫咪动画
+            const catAnimation = new CatAnimation(
+                catSprite, 
+                catFrame
+            );
+            
+            // 添加事件监听
+            playBtn.addEventListener('click', () => {
+                // 在测试页面中，将球投向暂停按钮
+                catAnimation.playAnimation(currentSpeed, () => {
+                    console.log('动画播放完成');
+                }, pauseBtn);
+            });
+            
+            pauseBtn.addEventListener('click', () => {
+                catAnimation.clearAllTimers();
+            });
+            
+            catPlayBtn.addEventListener('click', () => {
+                // 在测试页面中，将球投向播放按钮
+                catAnimation.playAnimation(currentSpeed, () => {
+                    console.log('动画播放完成');
+                }, playBtn);
+            });
+            
+            speedSlider.addEventListener('input', (e) => {
+                currentSpeed = parseFloat(e.target.value);
+                updateSpeedDisplay();
+            });
+            
+            // 更新速度显示
+            updateSpeedDisplay();
+        });
+    </script>
+</body>
+</html> 

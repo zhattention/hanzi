@@ -1,0 +1,97 @@
+/* Cat animation styles */
+.cat-sprite {
+    width: 300px;
+    height: 200px;
+    overflow: visible;
+    position: absolute;
+    bottom: 0px;
+    left: 60px;
+    z-index: 2;
+}
+
+.cat-sprite.hidden {
+    display: none;
+}
+
+.cat-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 800px;
+    height: 1066px;
+    object-fit: none;
+    /* 不在CSS中预设object-position，由JS控制 */
+    transform: scale(0.375);
+    transform-origin: top left;
+    filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.25));
+    overflow: hidden;
+    clip-path: inset(0 0 50% 0); /* 隐藏下一半 */
+}
+
+.cat-frame.playing {
+    animation-play-state: running;
+}
+
+@keyframes cat-walk {
+    0% {
+        object-position: 0 -533px; /* 第一帧（下半部分） */
+    }
+    40% {
+        object-position: 0 0; /* 第二帧（上半部分） */
+    }
+    100% {
+        object-position: 0 -533px; /* 回到第一帧（下半部分） */
+    }
+}
+
+/* 球的样式 */
+.throw-ball {
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle at 35% 35%, #FFFFFF, #F0F0F0 60%, #e0e0e0);
+    border-radius: 50%;
+    position: fixed;
+    display: none; /* 初始隐藏 */
+    z-index: 9999;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3), 
+                inset 4px -4px 8px rgba(0, 0, 0, 0.1),
+                inset -3px 3px 7px rgba(255, 255, 255, 0.8);
+    pointer-events: none; /* 避免球拦截点击事件 */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .cat-sprite {
+        width: 150px;
+        height: 100px;
+    }
+    
+    .cat-frame {
+        transform: scale(0.25);
+        clip-path: inset(0 0 50% 0); /* 确保在移动设备上也隐藏下半部分 */
+    }
+    
+    .throw-ball {
+        width: 25px;
+        height: 25px;
+    }
+}
+
+@media (max-width: 600px) {
+    .cat-sprite {
+        width: 120px;
+        height: 80px;
+        bottom: 15px;
+        left: 15px;
+    }
+    
+    .cat-frame {
+        transform: scale(0.2);
+        clip-path: inset(0 0 50% 0); /* 确保在小型移动设备上也隐藏下半部分 */
+    }
+    
+    .throw-ball {
+        width: 20px;
+        height: 20px;
+    }
+} 
